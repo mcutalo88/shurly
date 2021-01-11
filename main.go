@@ -1,7 +1,32 @@
 package main
 
-import "log"
+import (
+	"log"
+	"net/http"
+
+	"github.com/gorilla/context"
+	"github.com/gorilla/mux"
+	"go.uber.org/zap"
+)
 
 func main() {
-	log.Println("hello")
+	logger, _ := zap.NewProduction()
+	defer logger.Sync()
+
+	router := mux.NewRouter()
+
+	// TODO: Refactor logging injection later.
+	router.Use(func(h http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			context.Set(r, "log", logger)
+			h.ServeHTTP(w, r)
+		})
+	})
+
+	router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
+
+	logger.Info("Listening on :8000")
+	log.Fatal(http.ListenAndServe(":8000", router))
 }
