@@ -11,8 +11,6 @@ import (
 
 func main() {
 	logger, _ := zap.NewProduction()
-	defer logger.Sync()
-
 	router := mux.NewRouter()
 
 	// TODO: Refactor logging injection later.

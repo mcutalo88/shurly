@@ -11,3 +11,6 @@ dev:
 .PHONY: test
 test:
 	go test -race -covermode=atomic ./...
+
+lint:
+	golangci-lint run
