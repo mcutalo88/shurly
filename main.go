@@ -6,6 +6,7 @@ import (
 
 	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
+	"github.com/mcutalo88/shurly/handlers"
 	"go.uber.org/zap"
 )
 
@@ -24,6 +25,8 @@ func main() {
 	router.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 	})
+
+	router.HandleFunc("/shurly", handlers.CreateShurlyUrl).Methods("POST")
 
 	logger.Info("Listening on :8000")
 	log.Fatal(http.ListenAndServe(":8000", router))
