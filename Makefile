@@ -6,7 +6,7 @@ build:
 
 .PHONY: dev
 dev:
-	air
+	air -c .air.toml
 
 .PHONY: test
 test:
