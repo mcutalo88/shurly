@@ -1,16 +1,26 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
 	"github.com/mcutalo88/shurly/handlers"
+	"github.com/spf13/viper"
 	"go.uber.org/zap"
 )
 
 func main() {
+	viper.SetConfigFile("shurly-config.yaml")
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath(".")
+	err := viper.ReadInConfig()
+	if err != nil {
+		panic(fmt.Errorf("Fatal error config file: %s \n", err))
+	}
+
 	logger, _ := zap.NewProduction()
 	router := mux.NewRouter()
 
