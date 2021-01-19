@@ -1,24 +1,37 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"log"
 	"net/http"
 
-	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
 	"github.com/mcutalo88/shurly/handlers"
+	"github.com/mcutalo88/shurly/pkg/config"
+	"github.com/mcutalo88/shurly/pkg/db"
+	"github.com/mcutalo88/shurly/pkg/types"
 	"go.uber.org/zap"
 )
 
 func main() {
-	logger, _ := zap.NewProduction()
+	cfg := config.ReadConfig()
+
+	logger, err := zap.NewProduction()
+	if err != nil {
+		panic(fmt.Errorf("Fatal not setup logger: %v", err))
+	}
+
+	db := db.New(cfg)
+	defer db.Close()
+
 	router := mux.NewRouter()
 
 	// TODO: Refactor logging injection later.
 	router.Use(func(h http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			context.Set(r, "log", logger)
-			h.ServeHTTP(w, r)
+			ctx := context.WithValue(r.Context(), types.DatabaseContext, db)
+			h.ServeHTTP(w, r.WithContext(ctx))
 		})
 	})
 

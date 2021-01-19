@@ -1,0 +1,10 @@
+CREATE DATABASE IF NOT EXISTS shurly;
+
+CREATE USER shurly;
+GRANT ALL ON DATABASE shurly TO shurly;
+
+CREATE TABLE shurly_links (
+  id STRING PRIMARY KEY,
+  url STRING,
+  links STRING ARRAY
+);
