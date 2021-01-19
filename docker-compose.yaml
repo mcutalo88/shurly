@@ -1,14 +1,15 @@
 version: '3.8'
 services:
   db:
-    image: postgres:13-alpine
-    environment:
-      POSTGRES_DB: sherly
-      POSTGRES_USER: sherly
-      POSTGRES_PASSWORD: sherly
-    expose:
-      - "5432"
+    image: cockroachdb/cockroach:latest
+    command: start-single-node --insecure
     ports:
-      - "5432:5432"
-    restart: always
-    network_mode: "bridge"
+      - "26257:26257"
+      - "8080:8080"
+    networks:
+      cockroachdb_net:
+        aliases:
+          - node_1
+networks:
+  cockroachdb_net:
+    driver: bridge

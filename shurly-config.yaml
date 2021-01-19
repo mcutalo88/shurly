@@ -1,0 +1,6 @@
+database:
+  url: 0.0.0.0
+  port: 26257
+  db: shurly
+  username: root
+  sslmode: disable
