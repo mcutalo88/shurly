@@ -7,7 +7,7 @@ import (
 
 	_ "github.com/lib/pq"
 
-	"github.com/mcutalo88/shurly/pkg/config"
+	"github.com/mcutalo88/shurly/internal/config"
 )
 
 func New(cfg *config.Config) *sql.DB {

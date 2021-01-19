@@ -8,9 +8,9 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/mcutalo88/shurly/handlers"
-	"github.com/mcutalo88/shurly/pkg/config"
-	"github.com/mcutalo88/shurly/pkg/db"
-	"github.com/mcutalo88/shurly/pkg/types"
+	"github.com/mcutalo88/shurly/internal/config"
+	"github.com/mcutalo88/shurly/internal/db"
+	"github.com/mcutalo88/shurly/internal/types"
 	"go.uber.org/zap"
 )
 

@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/mcutalo88/shurly/pkg/types"
+	"github.com/mcutalo88/shurly/internal/types"
 )
 
 type Shurly struct {
