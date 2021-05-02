@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	"embed"
 	"fmt"
+	"io/fs"
 	"log"
 	"net/http"
 
@@ -13,6 +15,9 @@ import (
 	"github.com/mcutalo88/shurly/internal/types"
 	"go.uber.org/zap"
 )
+
+//go:embed frontend/build
+var content embed.FS
 
 func main() {
 	cfg := config.ReadConfig()
@@ -26,6 +31,10 @@ func main() {
 	defer db.Close()
 
 	router := mux.NewRouter()
+
+	fsys := fs.FS(content)
+	contentStatic, _ := fs.Sub(fsys, "frontend/build")
+	router.PathPrefix("/").Handler(http.FileServer(http.FS(contentStatic)))
 
 	// TODO: Refactor logging injection later.
 	router.Use(func(h http.Handler) http.Handler {
