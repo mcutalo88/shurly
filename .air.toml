@@ -15,7 +15,7 @@ bin = "build/sherly"
 # Watch these filename extensions.
 include_ext = ["go"]
 # Ignore these filename extensions or directories.
-exclude_dir = []
+exclude_dir = ["frontend/node_modules"]
 # Watch these directories if you specified.
 include_dir = []
 # Exclude files.
