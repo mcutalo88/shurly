@@ -1,5 +1,8 @@
 SHELL:=/usr/bin/env bash
 
+.PHONY: all
+all: build lint test
+
 .PHONY: build
 build:
 	go build -o build/sherly
